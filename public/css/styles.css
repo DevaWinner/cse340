@@ -71,8 +71,9 @@ main {
 	font-family: "Spectral", serif;
 }
 
-.welcome-section h2 {
+.welcome-section h1 {
 	margin-bottom: 0;
+	font-size: 1.6rem;
 	font-weight: 800;
 	padding: 0.5rem;
 }
@@ -180,6 +181,7 @@ main {
 footer {
 	padding: 0 0 1rem 0.7rem;
 	background-color: #fff;
+	font-weight: 400;
 }
 
 /****************** Media query for larger screens **************/
@@ -200,6 +202,10 @@ footer {
 
 	nav ul {
 		justify-content: space-around;
+	}
+
+	.welcome-section h1 {
+		font-size: 2rem;
 	}
 
 	.delorean-intro {
