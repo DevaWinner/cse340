@@ -425,13 +425,9 @@ footer {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-  gap: 1.4rem;
-	padding: 1.8rem;
+	gap: 2rem;
+	padding: 2rem;
 	margin: 0 auto;
-}
-
-.error-icon {
-	width: 100%;
 }
 
 .error-icon img {
@@ -443,11 +439,12 @@ footer {
 .error-message {
 	font-size: 1.2rem;
 	line-height: 1.5;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
 	.error-title {
-		font-size: 2rem;
+		font-size: 3.5rem;
 	}
 
 	.error-container {
@@ -456,7 +453,7 @@ footer {
 	}
 
 	.error-icon img {
-		width: 100%;
+		max-width: 500px;
 		height: auto;
 	}
 
