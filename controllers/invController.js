@@ -32,4 +32,11 @@ invCont.buildByInvId = async function (req, res, next) {
   })
 }
 
+/* ****************************************
+* Trigger intentional 500 error
+* *************************************** */
+invCont.triggerError = async function(req, res, next){
+  throw new Error('Intentional 500 error triggered');
+}
+
 module.exports = invCont;

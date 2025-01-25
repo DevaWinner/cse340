@@ -1,13 +1,9 @@
-/******* Default Styling ***************/
-*,
-*:before,
-*:after {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-}
+/* =====================================
+   ROOT VARIABLES
+====================================== */
 
 :root {
+	/* Existing brand variables */
 	--primary-color: #007bff;
 	--secondary-color: #6c757d;
 	--success-color: #28a745;
@@ -16,14 +12,36 @@
 	--danger-color: #dc3545;
 	--light-color: #f8f9fa;
 	--dark-color: #12191f;
+
+	/* New shared variables for repeated usage */
+	--white: #fff;
+	--gray-light: #ddd;
+	--gray-mid: #ccc;
+	--gray-dark: #333;
+	--border-radius: 8px;
+	--transition-speed: 0.2s;
+	--hover-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* =====================================
+   GLOBAL / DEFAULT
+====================================== */
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+html,
 body {
+	max-width: 100%;
+	overflow-x: hidden;
 	font-family: "Inter", sans-serif;
 	font-size: 16px;
 	line-height: 1.6;
-	margin: 0;
-	padding: 0;
+	box-sizing: border-box;
 }
 
 ul {
@@ -31,7 +49,9 @@ ul {
 	padding: 0;
 }
 
-/************* Header Styles ****************/
+/* =====================================
+   HEADER
+====================================== */
 
 header {
 	display: flex;
@@ -57,7 +77,7 @@ nav ul {
 }
 
 nav ul li {
-	padding: 0.8rem 1rem;
+	padding: 1rem 0.3rem;
 }
 
 nav ul li a {
@@ -65,7 +85,10 @@ nav ul li a {
 	text-decoration: none;
 }
 
-/************* Main Styles ****************/
+/* =====================================
+   MAIN
+====================================== */
+
 main {
 	padding: 0.5rem 0;
 	font-family: "Spectral", serif;
@@ -77,6 +100,10 @@ main {
 	font-weight: 800;
 	padding: 0.5rem;
 }
+
+/* =====================================
+   DELOREAN INTRO
+====================================== */
 
 .delorean-intro {
 	position: relative;
@@ -124,8 +151,12 @@ main {
 	border-radius: 5px;
 }
 
-/*********** Review Section ***************/
-.reviews-section {
+/* =====================================
+   REVIEWS & UPGRADES
+====================================== */
+
+.reviews-section,
+.upgrades-section {
 	padding: 1rem;
 }
 
@@ -141,11 +172,6 @@ main {
 	list-style-type: disc;
 	padding-left: 1.5rem;
 	margin-top: 0.5rem;
-}
-
-/*********** Upgrades Section ***************/
-.upgrades-section {
-	padding: 1rem;
 }
 
 .upgrades-grid {
@@ -176,25 +202,20 @@ main {
 	display: block;
 }
 
-/************ Footer **************/
+/* =====================================
+   RESPONSIVE (>= 768px)
+====================================== */
 
-footer {
-	padding: 0 0 1rem 0.7rem;
-	background-color: #fff;
-	font-weight: 400;
-}
-
-/****************** Media query for larger screens **************/
 @media (min-width: 768px) {
 	body {
 		background-image: url("../images/site/small_check.jpg");
-		padding: 3rem 10rem;
+		padding: 3rem 0;
 		font-size: 1.4rem;
 	}
 
 	.container {
-		background-color: #fff;
-		/* max-width: 1000px; */
+		background-color: var(--white);
+		max-width: 80vw;
 		margin: 0 auto;
 		border: var(--info-color) 5px solid;
 		border-radius: 10px;
@@ -209,7 +230,6 @@ footer {
 	}
 
 	.delorean-intro {
-		position: relative;
 		padding: 1rem 4rem;
 	}
 
@@ -226,5 +246,221 @@ footer {
 	.desktop .reviews-section,
 	.desktop .upgrades-section {
 		flex: 1;
+	}
+}
+
+/* =====================================
+   CLASSIFICATION GRID
+====================================== */
+
+.grid-header {
+	text-align: center;
+	padding: 1rem;
+}
+
+.inv-display {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.2rem;
+	list-style: none;
+	margin: 1rem auto;
+	padding: 1.3rem;
+}
+
+.grid-item {
+	background-color: var(--white);
+	border: 1px solid var(--gray-light);
+	border-radius: var(--border-radius);
+	overflow: hidden;
+	transition: transform var(--transition-speed),
+		box-shadow var(--transition-speed);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.grid-item:hover {
+	transform: translateY(-3px);
+	box-shadow: var(--hover-shadow);
+}
+
+.vehicle-thumbnail {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	display: block;
+}
+
+.namePrice {
+	padding: 0.75rem 1rem;
+	text-align: center;
+}
+
+.namePrice h2 {
+	margin: 0.5rem 0;
+	font-size: 1.1rem;
+	line-height: 1.2;
+}
+
+.namePrice span {
+	display: block;
+	font-weight: bold;
+	color: var(--gray-dark);
+	margin: 0.5rem 0;
+}
+
+.namePrice hr {
+	border: none;
+	border-top: 1px solid var(--gray-mid);
+	margin: 0.5rem 0;
+}
+
+@media (min-width: 600px) {
+	.inv-display {
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		max-width: 1300px;
+		margin: 0 auto;
+		padding: 2rem;
+	}
+
+	.grid-item {
+		max-width: 350px;
+		margin: 0 auto;
+	}
+}
+
+/* =====================================
+   VEHICLE DETAIL
+====================================== */
+
+#vehicle-detail {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 1rem;
+	border: 1px solid var(--gray-light);
+	border-radius: var(--border-radius);
+	background-color: var(--white);
+}
+
+.vehicle-image img {
+	width: 100%;
+	height: 200px;
+	display: block;
+	border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.vehicle-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+	padding: 1rem;
+}
+
+.vehicle-title {
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.vehicle-price {
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: var(--primary-color);
+}
+
+.vehicle-mileage,
+.vehicle-description,
+.vehicle-color {
+	font-size: 1rem;
+	color: var(--gray-dark);
+}
+
+@media screen and (min-width: 768px) {
+	#vehicle-detail {
+		flex-direction: row;
+		padding: 1rem;
+	}
+
+	.vehicle-image {
+		border-radius: var(--border-radius) !important;
+	}
+
+	.vehicle-info {
+		width: 50%;
+		justify-content: center;
+	}
+
+	.vehicle-title {
+		font-size: 2rem;
+	}
+
+	.vehicle-price {
+		font-size: 1.5rem;
+	}
+}
+
+/* =====================================
+   FOOTER
+====================================== */
+
+footer {
+	padding: 0 0 1rem 0.7rem;
+	background-color: var(--white);
+	font-weight: 400;
+}
+
+/* =====================================
+   ERROR
+====================================== */
+
+.error-title {
+	font-size: 2rem;
+	margin-bottom: 1.8rem;
+	color: #dc3545;
+	text-align: center;
+}
+
+.error-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+  gap: 1.4rem;
+	padding: 1.8rem;
+	margin: 0 auto;
+}
+
+.error-icon {
+	width: 100%;
+}
+
+.error-icon img {
+	width: 100%;
+	height: auto;
+	margin-bottom: 1.8rem;
+}
+
+.error-message {
+	font-size: 1.2rem;
+	line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+	.error-title {
+		font-size: 2rem;
+	}
+
+	.error-container {
+		flex-direction: row;
+		padding: 2rem;
+	}
+
+	.error-icon img {
+		width: 100%;
+		height: auto;
+	}
+
+	.error-message {
+		font-size: 1.6rem;
 	}
 }
