@@ -39,7 +39,7 @@ app.use(
 		next({
 			status: 404,
 			message:
-				"Sorry, we appear to have lost that page. I guess we broke the steering Wheel, we'll just have to carpool <a href='/'>home</a>",
+				"Sorry, we appear to have lost that page. I guess we broke the steering Wheel on that link, we'll just have to carpool <a href='/'>home</a>",
 		});
 	})
 );
@@ -55,7 +55,7 @@ app.use(async (err, req, res, next) => {
 		message = err.message;
 	} else {
     message =
-      "OOPS!! We broke the steering Wheel, guess we'll just have to carpool <a href='/'>home</a>";
+      "OOPS!! We broke the steering Wheel on that request, guess we'll just have to carpool <a href='/'>home</a>";
 	}
 	res.render("errors/error", {
 		title: err.status || "Server Error",
