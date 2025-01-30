@@ -11,12 +11,26 @@
 
 		<div class="form-group">
 			<label for="account_password">Password:</label>
-			<input
-				type="password"
-				id="account_password"
-				name="account_password"
-				required
-			/>
+			<div class="password-input-container">
+					<input 
+						type="password" 
+						id="account_password" 
+						name="account_password" 
+						required
+						pattern="(?=.*\d)(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{12,}"
+						title="Password must be at least 12 characters and include 1 capital letter, 1 number and 1 special character"
+					/>
+				<button type="button" id="showPassword" class="password-toggle">Show</button>
+			</div>
+			<div class="password-requirements">
+				Password must be:
+				<ul>
+					<li>At least 12 characters long</li>
+					<li>Contain at least 1 capital letter</li>
+					<li>Contain at least 1 number</li>
+					<li>Contain at least 1 special character</li>
+				</ul>
+			</div>
 		</div>
 
 		<button type="submit" class="form-button">Login</button>
@@ -26,3 +40,18 @@
 		No account? <a href="/account/register">Sign-up</a>
 	</p>
 </div>
+
+<script>
+document.getElementById('showPassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('account_password');
+    const showPasswordButton = document.getElementById('showPassword');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        showPasswordButton.textContent = 'Hide';
+    } else {
+        passwordInput.type = 'password';
+        showPasswordButton.textContent = 'Show';
+    }
+});
+</script>

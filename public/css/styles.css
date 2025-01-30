@@ -501,6 +501,7 @@ footer {
   border: 1px solid var(--gray-mid);
   border-radius: var(--border-radius);
   font-size: 1rem;
+  width: 100%;
 }
 
 .form-button {
