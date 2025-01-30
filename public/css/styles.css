@@ -439,7 +439,7 @@ footer {
 .error-message {
 	font-size: 1.2rem;
 	line-height: 1.5;
-  text-align: center;
+	text-align: center;
 }
 
 @media (min-width: 768px) {
@@ -460,4 +460,97 @@ footer {
 	.error-message {
 		font-size: 1.6rem;
 	}
+}
+
+/* Login Form Styles */
+.login-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border: 1px solid var(--gray-light);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.login-container h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--dark-color);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: var(--dark-color);
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border: 1px solid var(--gray-mid);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.form-button {
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: background-color var(--transition-speed);
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--dark-color);
+}
+
+.register-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.notice {
+  list-style: none;
+  padding: 1rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.notice {
+	color: #886400;
+	padding-left: 1.2rem;
+}
+
+.error {
+	font-size: 0.8rem;
+	color: #dc3545;
+	padding-left: 1.2rem;
 }

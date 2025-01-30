@@ -5,6 +5,8 @@
 /* ***********************
  * Require Statements
  *************************/
+const session = require("express-session");
+const pool = require("./database/");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
@@ -13,6 +15,34 @@ const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities");
+const accountRoute = require("./routes/accountRoute");
+
+/* ***********************
+ * Middleware
+ *************************/
+app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Add this line for form data
+
+app.use(
+	session({
+		store: new (require("connect-pg-simple")(session))({
+			createTableIfMissing: true,
+			pool,
+		}),
+		secret: process.env.SESSION_SECRET,
+		resave: true,
+		saveUninitialized: true,
+		name: "sessionId",
+	})
+);
+
+// Express Messages Middleware
+app.use(require("connect-flash")());
+app.use(function (req, res, next) {
+	res.locals.messages = require("express-messages")(req, res);
+	next();
+});
 
 /* ***********************
  * View Engine and Templates
@@ -32,6 +62,9 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 
 // Inventory routes
 app.use("/inv", utilities.handleErrors(inventoryRoute));
+
+// Account routes
+app.use("/account", utilities.handleErrors(accountRoute));
 
 // File Not Found Route - must be last route in list
 app.use(
@@ -54,8 +87,8 @@ app.use(async (err, req, res, next) => {
 	if (err.status == 404) {
 		message = err.message;
 	} else {
-    message =
-      "OOPS!! We broke the steering Wheel on that request, guess we'll just have to carpool <a href='/'>home</a>";
+		message =
+			"OOPS!! We broke the steering Wheel on that request, guess we'll just have to carpool <a href='/'>home</a>";
 	}
 	res.render("errors/error", {
 		title: err.status || "Server Error",
