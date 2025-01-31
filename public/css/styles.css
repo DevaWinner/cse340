@@ -620,3 +620,144 @@ footer {
 .form-button:hover {
     background-color: #0056b3;
 }
+
+/* =====================================
+   INVENTORY MANAGEMENT
+====================================== */
+.management {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.management h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--dark-color);
+}
+
+.management-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.management-links a {
+  display: block;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  text-align: center;
+  transition: background-color var(--transition-speed);
+}
+
+.management-links a:hover {
+  background-color: #0056b3;
+}
+
+/* Add Classification Form */
+.add-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.add-form h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.add-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.add-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.add-form input,
+.add-form select,
+.add-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--gray-mid);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.add-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.add-form .form-instructions {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  color: var(--gray-dark);
+}
+
+/* Add Classification and Add Inventory Forms */
+.add-classification-form,
+.add-inventory-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.add-classification-form h1,
+.add-inventory-form h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--dark-color);
+}
+
+.add-classification-form .form-group,
+.add-inventory-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.add-classification-form label,
+.add-inventory-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--dark-color);
+}
+
+.add-classification-form input,
+.add-inventory-form input,
+.add-inventory-form select,
+.add-inventory-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--gray-mid);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.add-inventory-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-hint {
+  font-size: 0.85rem;
+  color: var(--gray-dark);
+  margin-top: 0.25rem;
+}

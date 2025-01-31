@@ -59,16 +59,11 @@ app.set("layout", "./layouts/layout");
  * Routes
  *************************/
 app.use(static);
+app.use("/inv", utilities.handleErrors(inventoryRoute));
+app.use("/account", utilities.handleErrors(accountRoute));
 
-// Index Route
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome));
-
-// Inventory routes
-app.use("/inv", utilities.handleErrors(inventoryRoute));
-
-// Account routes
-app.use("/account", utilities.handleErrors(accountRoute));
 
 // File Not Found Route - must be last route in list
 app.use(
