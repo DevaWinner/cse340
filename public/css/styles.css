@@ -900,3 +900,23 @@ footer {
 		display: block;
 	}
 }
+
+.warning {
+	color: var(--danger-color);
+	font-weight: bold;
+	background-color: #fff5f5;
+	border: 1px solid var(--danger-color);
+}
+
+.delete-button {
+	background-color: var(--danger-color);
+}
+
+.delete-button:hover {
+	background-color: #b52a37;
+}
+
+[readonly] {
+	background-color: #f8f9fa;
+	cursor: not-allowed;
+}
