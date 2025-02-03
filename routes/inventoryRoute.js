@@ -6,7 +6,11 @@ const utilities = require("../utilities");
 const invValidate = require("../utilities/inventory-validation");
 
 // Route to management view - move this to the top of routes
-router.get("/", utilities.handleErrors(invController.buildManagementView));
+router.get("/", 
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
+  utilities.handleErrors(invController.buildManagementView)
+);
 
 // Route to get inventory JSON data - move this near the top, after the management view route
 router.get("/getInventory/:classification_id", 
@@ -32,35 +36,45 @@ router.get(
 );
 
 // Route to add classification view
-router.get(
-	"/add-classification",
-	utilities.handleErrors(invController.buildAddClassification)
+router.get("/add-classification", 
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
+  utilities.handleErrors(invController.buildAddClassification)
 );
 
 // Route to edit inventory view
 router.get("/edit/:inv_id", 
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
   utilities.handleErrors(invController.editInventoryView)
 );
 
 // Route to add inventory view
-router.get(
-	"/add-inventory",
-	utilities.handleErrors(invController.buildAddInventory)
+router.get("/add-inventory", 
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
+  utilities.handleErrors(invController.buildAddInventory)
 );
 
 // Route to handle deletion confirmation view
 router.get("/delete/:inv_id", 
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
   utilities.handleErrors(invController.deleteView)
 );
 
 // Route to handle the deletion
 router.post("/delete", 
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
   utilities.handleErrors(invController.deleteItem)
 );
 
 // Process adding classification with validation
 router.post(
 	"/add-classification",
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
 	invValidate.classificationRules(),
 	invValidate.checkData,
 	utilities.handleErrors(invController.addClassification)
@@ -69,6 +83,8 @@ router.post(
 // Process adding inventory with validation
 router.post(
 	"/add-inventory",
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
 	invValidate.inventoryRules(),
 	invValidate.checkData,
 	utilities.handleErrors(invController.addInventory)
@@ -77,6 +93,8 @@ router.post(
 // Route to update inventory
 router.post(
   "/update/",
+  utilities.checkLogin,
+  utilities.checkAdminEmployee,
   invValidate.inventoryRules(),
   invValidate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)

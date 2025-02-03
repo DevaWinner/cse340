@@ -21,6 +21,8 @@
 				type="text"
 				id="account_firstname"
 				name="account_firstname"
+				pattern="[A-Za-z]+"
+				title="Please enter only letters"
 				value="<%= locals.account_firstname ? account_firstname : '' %>"
 				required
 			/>
@@ -32,6 +34,8 @@
 				type="text"
 				id="account_lastname"
 				name="account_lastname"
+				pattern="[A-Za-z]+"
+				title="Please enter only letters"
 				value="<%= locals.account_lastname ? account_lastname : '' %>"
 				required
 			/>

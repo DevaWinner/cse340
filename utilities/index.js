@@ -144,36 +144,59 @@ Util.handleErrors = (fn) => (req, res, next) =>
  * Middleware to check token validity
  **************************************** */
 Util.checkJWTToken = (req, res, next) => {
-	if (req.cookies.jwt) {
-		jwt.verify(
-			req.cookies.jwt,
-			process.env.ACCESS_TOKEN_SECRET,
-			function (err, accountData) {
-				if (err) {
-					req.flash("Please log in");
-					res.clearCookie("jwt");
-					return res.redirect("/account/login");
-				}
-				res.locals.accountData = accountData;
-				res.locals.loggedin = 1;
-				next();
-			}
-		);
-	} else {
-		next();
-	}
-};
+  // Initialize default states
+  res.locals.loggedin = 0
+  res.locals.accountData = null
+
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          res.clearCookie("jwt")
+          res.locals.loggedin = 0
+          res.locals.accountData = null
+          return next()
+        }
+        res.locals.loggedin = 1
+        res.locals.accountData = accountData
+        next()
+      }
+    )
+  } else {
+    next()
+  }
+}
 
 /* ****************************************
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
-	if (res.locals.loggedin) {
-		next();
-	} else {
-		req.flash("notice", "Please log in.");
-		return res.redirect("/account/login");
-	}
-};
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+ *  Check Admin or Employee Authorization
+ * *************************************** */
+Util.checkAdminEmployee = (req, res, next) => {
+  if (res.locals.loggedin) {
+    const account_type = res.locals.accountData.account_type
+    if (account_type === "Admin" || account_type === "Employee"){
+      next()
+    } else {
+      req.flash("notice", "Please log in with employee credentials.")
+      return res.redirect("/account/login")
+    }
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
 
 module.exports = Util;

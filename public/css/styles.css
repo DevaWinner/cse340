@@ -86,6 +86,31 @@ nav ul li a {
 	text-decoration: none;
 }
 
+#tools {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+
+#tools a {
+	text-decoration: none;
+	color: var(--dark-color);
+	transition: color var(--transition-speed);
+}
+
+#tools a[href="/account/"] {
+	color: var(--primary-color);
+	font-weight: bold;
+}
+
+#tools a[href="/account/logout"] {
+	color: var(--danger-color);
+}
+
+#tools a:hover {
+	color: var(--form-button-hover);
+}
+
 /* =====================================
    MAIN
 ====================================== */
@@ -483,7 +508,6 @@ footer {
 .login-form {
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
 }
 
 .form-group {
@@ -578,13 +602,8 @@ footer {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.register-form .form-group {
-	margin-bottom: 1.5rem;
-}
-
 .register-form label {
 	display: block;
-	margin-bottom: 0.5rem;
 	font-weight: bold;
 }
 
@@ -700,7 +719,7 @@ footer {
 
 .add-form input,
 .add-form select,
-.add-form textarea {
+add-form textarea {
 	width: 100%;
 	padding: 0.75rem;
 	border: 1px solid var(--gray-mid);
@@ -719,7 +738,7 @@ footer {
 	background-color: #f8f9fa;
 	border-radius: var(--border-radius);
 	font-size: 0.9rem;
-	color: var(--gray-dark);
+	color: var (--gray-dark);
 }
 
 /* Add Classification and Add Inventory Forms */
@@ -919,4 +938,97 @@ footer {
 [readonly] {
 	background-color: #f8f9fa;
 	cursor: not-allowed;
+}
+
+/* Account Management Styles */
+.management h2 {
+	color: var(--dark-color);
+	margin-bottom: 1.5rem;
+}
+
+.management h3 {
+	color: var(--primary-color);
+	margin: 2rem 0 1rem;
+}
+
+.management-links {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.management-links a {
+	display: inline-block;
+	padding: 0.75rem 1.5rem;
+	background-color: var(--primary-color);
+	color: var(--white);
+	text-decoration: none;
+	border-radius: var(--border-radius);
+	transition: background-color var(--transition-speed);
+}
+
+.management-links a:hover {
+	background-color: var(--form-button-hover);
+}
+
+/* Account Update Styles */
+.form-container {
+	max-width: 600px;
+	margin: 2rem auto;
+	padding: 1rem;
+}
+
+.update-form {
+	background-color: var(--white);
+	padding: 2rem;
+	margin-bottom: 2rem;
+	border-radius: var(--border-radius);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.update-form h2 {
+	color: var(--primary-color);
+	margin-bottom: 1.5rem;
+	font-size: 1.5rem;
+}
+
+.password-info {
+	margin-bottom: 1rem;
+	color: var(--gray-dark);
+}
+
+.password-requirements {
+	list-style: disc;
+	margin-left: 1.5rem;
+	margin-bottom: 1.5rem;
+	color: var(--gray-dark);
+	font-size: 0.9rem;
+}
+
+.password-input-container {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.password-toggle {
+	padding: 0.5rem 1rem;
+	background-color: var(--gray-light);
+	border: 1px solid var(--gray-mid);
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.password-toggle:hover {
+	background-color: var(--gray-mid);
+}
+
+.form-group {
+	margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+	.update-form {
+		padding: 1rem;
+	}
 }
