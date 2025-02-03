@@ -271,4 +271,68 @@ invCont.updateInventory = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Build delete confirmation view
+ * ************************** */
+invCont.deleteView = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.inv_id)
+    const nav = await utilities.getNav()
+    const itemData = await invModel.getInventoryById(inv_id)
+
+    if (!itemData) {
+      req.flash("notice", "That vehicle does not exist.")
+      res.redirect("/inv/")
+      return
+    }
+
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+    res.render("./inventory/delete-confirm", {
+      title: "Delete " + itemName,
+      nav,
+      errors: null,
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_price: itemData.inv_price,
+    })
+  } catch (error) {
+    console.error("Error in deleteView:", error)
+    req.flash("notice", "Sorry, there was an error processing the request.")
+    res.redirect("/inv/")
+  }
+}
+
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+invCont.deleteItem = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.body.inv_id)
+    const itemData = await invModel.getInventoryById(inv_id)
+
+    if (!itemData) {
+      req.flash("notice", "That vehicle does not exist.")
+      res.redirect("/inv/")
+      return
+    }
+
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+    const deleteResult = await invModel.deleteInventoryItem(inv_id)
+
+    if (deleteResult.rowCount > 0) {
+      req.flash("notice", `The ${itemName} was successfully deleted.`)
+      res.redirect("/inv/")
+    } else {
+      req.flash("notice", "Sorry, the delete failed.")
+      res.redirect("/inv/")
+    }
+  } catch (error) {
+    console.error("Error in deleteItem:", error)
+    req.flash("notice", "Sorry, there was an error processing the deletion.")
+    res.redirect("/inv/")
+  }
+}
+
 module.exports = invCont;

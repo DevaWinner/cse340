@@ -48,6 +48,16 @@ router.get(
 	utilities.handleErrors(invController.buildAddInventory)
 );
 
+// Route to handle deletion confirmation view
+router.get("/delete/:inv_id", 
+  utilities.handleErrors(invController.deleteView)
+);
+
+// Route to handle the deletion
+router.post("/delete", 
+  utilities.handleErrors(invController.deleteItem)
+);
+
 // Process adding classification with validation
 router.post(
 	"/add-classification",
