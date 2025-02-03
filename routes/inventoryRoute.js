@@ -8,6 +8,11 @@ const invValidate = require("../utilities/inventory-validation");
 // Route to management view - move this to the top of routes
 router.get("/", utilities.handleErrors(invController.buildManagementView));
 
+// Route to get inventory JSON data - move this near the top, after the management view route
+router.get("/getInventory/:classification_id", 
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
 // Route to build inventory by classification view
 router.get(
 	"/type/:classificationId",
@@ -32,6 +37,11 @@ router.get(
 	utilities.handleErrors(invController.buildAddClassification)
 );
 
+// Route to edit inventory view
+router.get("/edit/:inv_id", 
+  utilities.handleErrors(invController.editInventoryView)
+);
+
 // Route to add inventory view
 router.get(
 	"/add-inventory",
@@ -53,5 +63,13 @@ router.post(
 	invValidate.checkData,
 	utilities.handleErrors(invController.addInventory)
 );
+
+// Route to update inventory
+router.post(
+  "/update/",
+  invValidate.inventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+)
 
 module.exports = router;

@@ -521,6 +521,17 @@ footer {
 	background-color: var(--form-button-hover);
 }
 
+.form-button:disabled {
+  background-color: var(--gray-mid);
+  color: var(--gray-dark);
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+.form-button:disabled:hover {
+  background-color: var(--gray-mid);
+}
+
 .register-link {
 	text-align: center;
 	margin-top: 1.5rem;
@@ -762,4 +773,91 @@ footer {
 	font-size: 0.85rem;
 	color: var(--gray-dark);
 	margin-top: 0.25rem;
+}
+
+/* =====================================
+   INVENTORY MANAGEMENT
+====================================== */
+.manage-inventory {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.manage-inventory h2 {
+  color: var(--dark-color);
+  margin-bottom: 1rem;
+}
+
+.manage-inventory p {
+  margin-bottom: 1.5rem;
+  color: var(--gray-dark);
+}
+
+/* Select list styling */
+#classificationList {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--gray-mid);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+#classificationList:focus {
+  outline: 2px solid var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Table styling */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  background-color: var(--white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#inventoryDisplay thead {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+#inventoryDisplay tbody tr:hover {
+  background-color: rgba(6, 98, 197, 0.05);
+}
+
+#inventoryDisplay td a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+#inventoryDisplay td a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  .manage-inventory {
+    padding: 2rem;
+  }
+
+  #classificationList {
+    width: 50%;
+    margin-bottom: 3rem;
+  }
+
+  #inventoryDisplay th,
+  #inventoryDisplay td {
+    padding: 1.25rem;
+  }
 }
