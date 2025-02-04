@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	checkoutForm.addEventListener("submit", function (event) {
 		let errors = [];
 
-		// Retrieve and trim form values.
 		const shipping_address = document
 			.getElementById("shipping_address")
 			.value.trim();
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			.getElementById("shipping_phone")
 			.value.trim();
 
-		// Client-side validation rules.
 		if (!shipping_address) {
 			errors.push("Shipping address is required.");
 		}
@@ -30,18 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		if (shipping_state.length !== 2) {
 			errors.push("State must be 2 characters (e.g., CA).");
 		}
-		// Simple US Zip code validation: 5 digits optionally followed by a dash and 4 digits.
 		if (!/^\d{5}(-\d{4})?$/.test(shipping_zip)) {
 			errors.push("Please provide a valid US zip code.");
 		}
-		// Validate phone number: exactly 10 digits.
 		if (!/^\d{10}$/.test(shipping_phone)) {
 			errors.push("Phone number must be 10 digits.");
 		}
 
 		if (errors.length > 0) {
 			event.preventDefault();
-			// Display errors in an alert (alternatively, you could display inline).
 			alert(errors.join("\n"));
 		}
 	});

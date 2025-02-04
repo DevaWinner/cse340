@@ -38,6 +38,7 @@ validate.checkCheckoutData = async (req, res, next) => {
 			shipping_state: req.body.shipping_state,
 			shipping_zip: req.body.shipping_zip,
 			shipping_phone: req.body.shipping_phone,
+			cartItems: req.body.cartItems || [],
 			total: req.body.total || "0.00",
 		});
 		return;

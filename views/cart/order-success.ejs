@@ -7,7 +7,13 @@
 		<li><%= name %></li>
 		<% }); %>
 	</ul>
-	<p>Total Cost: $<%= total %></p>
+	<p>
+		Total Cost:
+		<strong
+			><%= "$" + Number(total).toLocaleString("en-US", { minimumFractionDigits:
+			0, maximumFractionDigits: 2 }) %></strong
+		>
+	</p>
 	<p>
 		A customer representative will contact you shortly to complete the order.
 	</p>

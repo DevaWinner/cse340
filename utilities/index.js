@@ -1,12 +1,9 @@
 const invModel = require("../models/inventory-model");
-const cartModel = require("../models/cart-model"); // NEW: for cart count
+const cartModel = require("../models/cart-model");
 const Util = {};
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-/* ************************
- * Constructs the nav HTML unordered list
- ************************ */
 Util.getNav = async function (req, res, next) {
 	let data = await invModel.getClassifications();
 	let list = "<ul>";
@@ -27,10 +24,6 @@ Util.getNav = async function (req, res, next) {
 	return list;
 };
 
-/* **************************************
- * Build the classification view HTML
- * Accepts an optional second parameter showCartButton (boolean)
- **************************************** */
 Util.buildClassificationGrid = async function (data, showCartButton = false) {
 	let grid = "";
 	if (data.length > 0) {
@@ -60,11 +53,11 @@ Util.buildClassificationGrid = async function (data, showCartButton = false) {
                 ${vehicle.inv_make} ${vehicle.inv_model}
               </a>
             </h2>
-            <span>$${new Intl.NumberFormat("en-US").format(
-							vehicle.inv_price
-						)}</span>
+            <span>$${new Intl.NumberFormat("en-US", {
+							minimumFractionDigits: 0,
+							maximumFractionDigits: 2,
+						}).format(vehicle.inv_price)}</span>
           </div>`;
-			// Always render the Add to Cart button.
 			if (showCartButton) {
 				grid += `
           <form action="/cart/add" method="POST">
@@ -81,9 +74,6 @@ Util.buildClassificationGrid = async function (data, showCartButton = false) {
 	return grid;
 };
 
-/* **************************************
- * Build the vehicle detail view HTML
- * ************************************ */
 Util.buildVehicleDetail = function (vehicle) {
 	return `
     <div id="vehicle-detail">
@@ -99,11 +89,17 @@ Util.buildVehicleDetail = function (vehicle) {
 	}</h2>
         <p class="vehicle-price">
           <strong>Price:</strong> 
-          $${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}
+          $${new Intl.NumberFormat("en-US", {
+						minimumFractionDigits: 0,
+						maximumFractionDigits: 2,
+					}).format(vehicle.inv_price)}
         </p>
         <p class="vehicle-mileage">
           <strong>Mileage:</strong> 
-          ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)} miles
+          ${new Intl.NumberFormat("en-US", {
+						minimumFractionDigits: 0,
+						maximumFractionDigits: 2,
+					}).format(vehicle.inv_miles)} miles
         </p>
         <p class="vehicle-description">
           <strong>Description:</strong> 
@@ -122,9 +118,6 @@ Util.buildVehicleDetail = function (vehicle) {
   `;
 };
 
-/* **************************************
- * Build the classification select list
- **************************************** */
 Util.buildClassificationList = async function (selected = null) {
 	let data = await invModel.getClassifications();
 	let classifications = data.rows;
@@ -143,15 +136,9 @@ Util.buildClassificationList = async function (selected = null) {
 	return classificationList;
 };
 
-/* ****************************************
- * Middleware For Handling Errors
- **************************************** */
 Util.handleErrors = (fn) => (req, res, next) =>
 	Promise.resolve(fn(req, res, next)).catch(next);
 
-/* ****************************************
- * Middleware to check token validity
- **************************************** */
 Util.checkJWTToken = (req, res, next) => {
 	res.locals.loggedin = 0;
 	res.locals.accountData = null;
@@ -177,9 +164,6 @@ Util.checkJWTToken = (req, res, next) => {
 	}
 };
 
-/* ****************************************
- * NEW Middleware: Set Cart Count for Client Users
- **************************************** */
 Util.setCartCount = async (req, res, next) => {
 	if (res.locals.loggedin && res.locals.accountData.account_type === "Client") {
 		try {
@@ -197,9 +181,6 @@ Util.setCartCount = async (req, res, next) => {
 	next();
 };
 
-/* ****************************************
- *  Check Login
- ************************************ */
 Util.checkLogin = (req, res, next) => {
 	if (res.locals.loggedin) {
 		next();
@@ -209,9 +190,6 @@ Util.checkLogin = (req, res, next) => {
 	}
 };
 
-/* ****************************************
- *  Check Admin or Employee Authorization
- *************************************** */
 Util.checkAdminEmployee = (req, res, next) => {
 	if (res.locals.loggedin) {
 		const account_type = res.locals.accountData.account_type;
@@ -225,6 +203,16 @@ Util.checkAdminEmployee = (req, res, next) => {
 		req.flash("notice", "Please log in.");
 		return res.redirect("/account/login");
 	}
+};
+
+Util.formatPrice = function (amount) {
+	return (
+		"$" +
+		Number(amount).toLocaleString("en-US", {
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 2,
+		})
+	);
 };
 
 module.exports = Util;

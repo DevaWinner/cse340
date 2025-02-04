@@ -5,38 +5,31 @@
 		<thead>
 			<tr>
 				<th>Vehicle</th>
-				<th>Price</th>
 				<th>Quantity</th>
-				<th>Line Total</th>
+				<th>Price</th>
+				<th>Total</th>
 				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
-			<% cartItems.forEach(item => { const price = parseFloat(item.inv_price);
-			const lineTotal = price * item.quantity; // Format numbers: no trailing
-			zeros unless there are cents. const formatter = new
+			<% cartItems.forEach(item => { const unitPrice = new
 			Intl.NumberFormat("en-US", { style: "currency", currency: "USD",
-			minimumFractionDigits: 0, maximumFractionDigits: 2 }); %>
+			minimumFractionDigits: 0, maximumFractionDigits: 2,
+			}).format(item.inv_price); const lineTotal = new
+			Intl.NumberFormat("en-US", { style: "currency", currency: "USD",
+			minimumFractionDigits: 0, maximumFractionDigits: 2,
+			}).format(item.inv_price * item.quantity); %>
 			<tr>
-				<td>
-					<img
-						src="<%= item.inv_thumbnail %>"
-						alt="Thumbnail of <%= item.inv_make %> <%= item.inv_model %>"
-						class="cart-thumbnail"
-					/>
-					<span><%= item.inv_make %> <%= item.inv_model %></span>
-				</td>
-				<td><%= formatter.format(price) %></td>
+				<td><%= item.inv_make %> <%= item.inv_model %></td>
 				<td><%= item.quantity %></td>
-				<td><%= formatter.format(lineTotal) %></td>
+				<td><%= unitPrice %></td>
+				<td><%= lineTotal %></td>
 				<td>
-					<form
-						action="/cart/remove"
-						method="POST"
-						onsubmit="return confirm('Are you sure you want to remove this item?');"
-					>
+					<form action="/cart/remove" method="POST">
 						<input type="hidden" name="cart_id" value="<%= item.cart_id %>" />
-						<button type="submit" class="remove-button">Remove</button>
+						<button type="submit" class="form-button remove-button">
+							Remove
+						</button>
 					</form>
 				</td>
 			</tr>
