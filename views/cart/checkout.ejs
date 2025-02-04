@@ -1,6 +1,16 @@
 <div class="checkout-container">
 	<h1><%= title %></h1>
-	<%- messages() %> <% if (cartItems.length > 0) { %>
+	<%- messages() %>
+
+	<% if (locals.errors) { %>
+	<ul class="notice">
+		<% errors.forEach(error => { %>
+		<li><%= error.msg %></li>
+		<% }) %>
+	</ul>
+	<% } %>
+
+	<% if (cartItems.length > 0) { %>
 	<div class="checkout-summary">
 		<table class="cart-table">
 			<thead>
@@ -9,7 +19,6 @@
 					<th>Quantity</th>
 					<th>Price</th>
 					<th>Total</th>
-					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,18 +30,10 @@
 				minimumFractionDigits: 0, maximumFractionDigits: 2,
 				}).format(item.inv_price * item.quantity); %>
 				<tr>
-					<td><%= item.inv_make %> <%= item.inv_model %></td>
-					<td><%= item.quantity %></td>
-					<td><%= unitPrice %></td>
-					<td><%= lineTotal %></td>
-					<td>
-						<form action="/cart/remove" method="POST">
-							<input type="hidden" name="cart_id" value="<%= item.cart_id %>" />
-							<button type="submit" class="form-button remove-button">
-								Remove
-							</button>
-						</form>
-					</td>
+					<td data-label="Vehicle"><%= item.inv_make %> <%= item.inv_model %></td>
+					<td data-label="Quantity"><%= item.quantity %></td>
+					<td data-label="Price"><%= unitPrice %></td>
+					<td data-label="Total"><%= lineTotal %></td>
 				</tr>
 				<% }); %>
 			</tbody>
@@ -49,7 +50,6 @@
 		action="/cart/checkout"
 		method="POST"
 		class="checkout-form"
-		novalidate
 	>
 		<div class="form-group">
 			<label for="shipping_address">Shipping Address:</label>
@@ -57,7 +57,7 @@
 				type="text"
 				id="shipping_address"
 				name="shipping_address"
-				value="<%= typeof shipping_address !== 'undefined' ? shipping_address : '' %>"
+				value="<%= locals.shipping_address ? shipping_address : '' %>"
 				required
 			/>
 		</div>
@@ -67,42 +67,50 @@
 				type="text"
 				id="shipping_city"
 				name="shipping_city"
-				value="<%= typeof shipping_city !== 'undefined' ? shipping_city : '' %>"
+				value="<%= locals.shipping_city ? shipping_city : '' %>"
 				required
 			/>
 		</div>
 		<div class="form-group">
-			<label for="shipping_state">State:</label>
+			<label for="shipping_state">State/Province:</label>
 			<input
 				type="text"
 				id="shipping_state"
 				name="shipping_state"
-				value="<%= typeof shipping_state !== 'undefined' ? shipping_state : '' %>"
-				maxlength="2"
+				value="<%= locals.shipping_state ? shipping_state : '' %>"
 				required
 			/>
 		</div>
 		<div class="form-group">
-			<label for="shipping_zip">Zip Code:</label>
+			<label for="shipping_country">Country:</label>
+			<input
+				type="text"
+				id="shipping_country"
+				name="shipping_country"
+				value="<%= locals.shipping_country ? shipping_country : '' %>"
+				required
+			/>
+		</div>
+		<div class="form-group">
+			<label for="shipping_zip">Postal/ZIP Code:</label>
 			<input
 				type="text"
 				id="shipping_zip"
 				name="shipping_zip"
-				value="<%= typeof shipping_zip !== 'undefined' ? shipping_zip : '' %>"
+				value="<%= locals.shipping_zip ? shipping_zip : '' %>"
 				required
 			/>
 		</div>
 		<div class="form-group">
 			<label for="shipping_phone">Phone Number:</label>
 			<input
-				type="text"
+				type="tel"
 				id="shipping_phone"
 				name="shipping_phone"
-				value="<%= typeof shipping_phone !== 'undefined' ? shipping_phone : '' %>"
+				value="<%= locals.shipping_phone ? shipping_phone : '' %>"
 				required
 			/>
 		</div>
 		<button type="submit" class="form-button">Place Order</button>
 	</form>
 </div>
-<script src="/js/checkout.js"></script>

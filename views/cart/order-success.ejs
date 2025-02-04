@@ -7,15 +7,9 @@
 		<li><%= name %></li>
 		<% }); %>
 	</ul>
-	<p>
-		Total Cost:
-		<strong
-			><%= "$" + Number(total).toLocaleString("en-US", { minimumFractionDigits:
-			0, maximumFractionDigits: 2 }) %></strong
-		>
-	</p>
-	<p>
+	<p>Total Cost: <strong><%= total %></strong></p>
+	<p class="customer-service">
 		A customer representative will contact you shortly to complete the order.
 	</p>
-	<a href="/" class="form-button">Return Home</a>
+	<a href="/">Return Home</a>
 </div>

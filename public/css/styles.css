@@ -88,13 +88,13 @@ nav ul li a {
 	text-decoration: none;
 }
 
-#tools {
+.top-nav {
 	display: flex;
-	gap: 0.5rem;
+	gap: 1rem;
 	align-items: center;
 }
 
-#tools a {
+.top-nav a {
 	text-decoration: none;
 	color: var(--dark-color);
 	transition: color var(--transition-speed);
@@ -102,16 +102,16 @@ nav ul li a {
 	white-space: nowrap;
 }
 
-#tools a[href="/account/"] {
+.top-nav a[href="/account/"] {
 	color: var(--primary-color);
 	font-weight: bold;
 }
 
-#tools a[href="/account/logout"] {
+.top-nav a[href="/account/logout"] {
 	color: var(--danger-color);
 }
 
-#tools a:hover {
+.top-nav a:hover {
 	color: var(--form-button-hover);
 }
 
@@ -760,7 +760,7 @@ add-form textarea {
 .add-inventory-form h1 {
 	text-align: center;
 	margin-bottom: 2rem;
-	color: var(--dark-color);
+	color: var (--dark-color);
 }
 
 .add-classification-form .form-group,
@@ -773,7 +773,7 @@ add-form textarea {
 	display: block;
 	margin-bottom: 0.5rem;
 	font-weight: bold;
-	color: var(--dark-color);
+	color: var (--dark-color);
 }
 
 .add-classification-form input,
@@ -1049,6 +1049,10 @@ add-form textarea {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.responsive-table {
+	overflow-x: auto;
+}
+
 .cart-table {
 	width: 100%;
 	border-collapse: collapse;
@@ -1060,6 +1064,48 @@ add-form textarea {
 	padding: 0.8rem;
 	text-align: left;
 	border-bottom: 1px solid var(--gray-light);
+}
+
+/* Mobile styles for cart table */
+@media screen and (max-width: 600px) {
+	.cart-table thead {
+		display: none;
+	}
+
+	.cart-table tbody tr {
+		display: block;
+		margin-bottom: 1.5rem;
+		border: 1px solid var(--gray-light);
+		border-radius: var(--border-radius);
+		padding: 0.5rem;
+	}
+
+	.cart-table tbody td {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.5rem;
+		border-bottom: 1px solid var(--gray-light);
+	}
+
+	.cart-table tbody td:last-child {
+		border-bottom: none;
+	}
+
+	.cart-table td::before {
+		content: attr(data-label);
+		font-weight: bold;
+		margin-right: 1rem;
+	}
+
+	.cart-table td.action-cell {
+		justify-content: flex-end;
+	}
+
+	.remove-button {
+		width: 100%;
+		margin-top: 0.5rem;
+	}
 }
 
 .cart-thumbnail {
@@ -1076,6 +1122,57 @@ add-form textarea {
 	margin: 1rem;
 }
 
+/* Improved Cart Actions Layout */
+.cart-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-top: 2rem;
+	padding: 1rem;
+	border-top: 2px solid var(--gray-light);
+}
+
+.cart-total {
+	text-align: right;
+	font-size: 1.4rem;
+	color: var(--dark-color);
+}
+
+.cart-total strong {
+	color: var(--primary-color);
+	font-size: 1.6rem;
+}
+
+.checkout-action {
+	text-align: right;
+}
+
+.checkout-button {
+	display: inline-block;
+	min-width: 200px;
+	text-align: center;
+	text-decoration: none;
+	background-color: var(--primary-color);
+	font-size: 1.1rem;
+	padding: 1rem 2rem;
+}
+
+.checkout-button:hover {
+	background-color: var(--form-button-hover);
+}
+
+@media screen and (min-width: 768px) {
+	.cart-actions {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.checkout-action {
+		margin-left: 2rem;
+	}
+}
+
 /* =====================================
    Checkout Styles
 ====================================== */
@@ -1086,6 +1183,34 @@ add-form textarea {
 	background-color: var(--white);
 	border-radius: var(--border-radius);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-summary .cart-table {
+	margin-bottom: 2rem;
+}
+
+/* Override mobile styles for checkout table */
+@media screen and (max-width: 600px) {
+	.checkout-summary .cart-table thead {
+		display: table-header-group;
+	}
+
+	.checkout-summary .cart-table tbody tr {
+		display: table-row;
+		margin-bottom: 0;
+		border: none;
+		padding: 0;
+	}
+
+	.checkout-summary .cart-table tbody td {
+		display: table-cell;
+		padding: 0.8rem;
+		border-bottom: 1px solid var(--gray-light);
+	}
+
+	.checkout-summary .cart-table td::before {
+		content: none;
+	}
 }
 
 .checkout-form .form-group {
@@ -1119,4 +1244,8 @@ add-form textarea {
 
 .remove-button:hover {
 	background-color: #b52a37;
+}
+
+.customer-service {
+  margin: 1.3rem;
 }

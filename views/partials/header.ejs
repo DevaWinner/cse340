@@ -2,9 +2,9 @@
   <span class="siteName">
     <a href="/" title="Return to home page">CSE Motors</a>
   </span>
-  <div id="tools">
+  <div id="tools" class="top-nav">
     <% if (loggedin) { %>
-      <a title="Manage account" href="/account/">Welcome <%= accountData.account_firstname %></a>
+      <a title="Manage account" href="/account/">Account</a>
       <% if (accountData.account_type === "Client") { %>
         <a title="View your shopping cart" href="/cart">Cart (<%= cartCount %>)</a>
       <% } %>

@@ -126,33 +126,32 @@ async function placeOrder(req, res, next) {
 			req.flash("notice", "Please log in as a client to place an order.");
 			return res.redirect("/account/login");
 		}
-		const {
-			shipping_address,
-			shipping_city,
-			shipping_state,
-			shipping_zip,
-			shipping_phone,
-		} = req.body;
+
+		// Get cart items before clearing the cart
 		const cartItems = await cartModel.getCartItems(accountData.account_id);
 		if (!cartItems || cartItems.length === 0) {
 			req.flash("notice", "Your cart is empty.");
 			return res.redirect("/cart");
 		}
+
 		let total = 0;
 		let vehicleNames = [];
 		cartItems.forEach((item) => {
 			total += parseFloat(item.inv_price) * item.quantity;
-			vehicleNames.push(
-				`${item.inv_make} ${item.inv_model} (x${item.quantity})`
-			);
+			vehicleNames.push(`${item.inv_make} ${item.inv_model} (x${item.quantity})`);
 		});
+
 		const formattedTotal = new Intl.NumberFormat("en-US", {
 			style: "currency",
 			currency: "USD",
 			minimumFractionDigits: 0,
 			maximumFractionDigits: 2,
 		}).format(total);
+
+		// Clear the cart first
 		await cartModel.clearCartItems(accountData.account_id);
+
+		// Then render the success page
 		const nav = await utilities.getNav();
 		res.render("cart/order-success", {
 			title: "Order Success",
@@ -162,6 +161,10 @@ async function placeOrder(req, res, next) {
 			total: formattedTotal,
 			errors: null,
 		});
+
+		// Update cart count in session
+		res.locals.cartCount = 0;
+
 	} catch (error) {
 		next(error);
 	}
