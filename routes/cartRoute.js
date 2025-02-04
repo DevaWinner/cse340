@@ -16,4 +16,7 @@ router.post(
 	cartController.placeOrder
 );
 
+// Add new route for success page
+router.get("/success", utilities.checkLogin, cartController.orderSuccess);
+
 module.exports = router;

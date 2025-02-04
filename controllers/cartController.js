@@ -134,36 +134,54 @@ async function placeOrder(req, res, next) {
 			return res.redirect("/cart");
 		}
 
-		let total = 0;
-		let vehicleNames = [];
-		cartItems.forEach((item) => {
-			total += parseFloat(item.inv_price) * item.quantity;
-			vehicleNames.push(`${item.inv_make} ${item.inv_model} (x${item.quantity})`);
-		});
+		// Store order details in session
+		req.session.orderDetails = {
+			firstName: accountData.account_firstname,
+			vehicleNames: cartItems.map(item => 
+				`${item.inv_make} ${item.inv_model} (x${item.quantity})`
+			),
+			total: new Intl.NumberFormat("en-US", {
+				style: "currency",
+				currency: "USD",
+				minimumFractionDigits: 0,
+				maximumFractionDigits: 2,
+			}).format(cartItems.reduce((sum, item) => 
+				sum + (parseFloat(item.inv_price) * item.quantity), 0
+			))
+		};
 
-		const formattedTotal = new Intl.NumberFormat("en-US", {
-			style: "currency",
-			currency: "USD",
-			minimumFractionDigits: 0,
-			maximumFractionDigits: 2,
-		}).format(total);
-
-		// Clear the cart first
+		// Clear the cart
 		await cartModel.clearCartItems(accountData.account_id);
 
-		// Then render the success page
+		// Redirect to success page
+		res.redirect("/cart/success");
+
+	} catch (error) {
+		next(error);
+	}
+}
+
+// New function to handle success page
+async function orderSuccess(req, res, next) {
+	try {
+		// Get order details from session
+		const orderDetails = req.session.orderDetails;
+		if (!orderDetails) {
+			return res.redirect("/cart");
+		}
+
 		const nav = await utilities.getNav();
 		res.render("cart/order-success", {
 			title: "Order Success",
 			nav,
-			firstName: accountData.account_firstname,
-			vehicleNames,
-			total: formattedTotal,
+			firstName: orderDetails.firstName,
+			vehicleNames: orderDetails.vehicleNames,
+			total: orderDetails.total,
 			errors: null,
 		});
 
-		// Update cart count in session
-		res.locals.cartCount = 0;
+		// Clear the order details from session
+		delete req.session.orderDetails;
 
 	} catch (error) {
 		next(error);
@@ -176,4 +194,5 @@ module.exports = {
 	checkoutView,
 	removeFromCart,
 	placeOrder,
+	orderSuccess,
 };
