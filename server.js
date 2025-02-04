@@ -17,6 +17,7 @@ const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities");
 const accountRoute = require("./routes/accountRoute");
+const cartRoute = require("./routes/cartRoute");
 const bodyParser = require("body-parser");
 
 /* ***********************
@@ -52,6 +53,7 @@ app.use(function (req, res, next) {
 app.use(cookieParser());
 
 app.use(utilities.checkJWTToken);
+app.use(utilities.setCartCount);
 
 /* ***********************
  * View Engine and Templates
@@ -66,6 +68,7 @@ app.set("layout", "./layouts/layout");
 app.use(static);
 app.use("/inv", utilities.handleErrors(inventoryRoute));
 app.use("/account", utilities.handleErrors(accountRoute));
+app.use("/cart", utilities.handleErrors(cartRoute));
 
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome));

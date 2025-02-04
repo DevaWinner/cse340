@@ -1,0 +1,53 @@
+<div class="cart-container">
+	<h1><%= title %></h1>
+	<%- messages() %> <% if (cartItems.length > 0) { %>
+	<table class="cart-table">
+		<thead>
+			<tr>
+				<th>Vehicle</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Line Total</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% cartItems.forEach(item => { const price = parseFloat(item.inv_price);
+			const lineTotal = price * item.quantity; // Format numbers: no trailing
+			zeros unless there are cents. const formatter = new
+			Intl.NumberFormat("en-US", { style: "currency", currency: "USD",
+			minimumFractionDigits: 0, maximumFractionDigits: 2 }); %>
+			<tr>
+				<td>
+					<img
+						src="<%= item.inv_thumbnail %>"
+						alt="Thumbnail of <%= item.inv_make %> <%= item.inv_model %>"
+						class="cart-thumbnail"
+					/>
+					<span><%= item.inv_make %> <%= item.inv_model %></span>
+				</td>
+				<td><%= formatter.format(price) %></td>
+				<td><%= item.quantity %></td>
+				<td><%= formatter.format(lineTotal) %></td>
+				<td>
+					<form
+						action="/cart/remove"
+						method="POST"
+						onsubmit="return confirm('Are you sure you want to remove this item?');"
+					>
+						<input type="hidden" name="cart_id" value="<%= item.cart_id %>" />
+						<button type="submit" class="remove-button">Remove</button>
+					</form>
+				</td>
+			</tr>
+			<% }); %>
+		</tbody>
+	</table>
+	<div class="cart-total">
+		<p>Total: <strong><%= total %></strong></p>
+		<a href="/cart/checkout" class="form-button">Checkout</a>
+	</div>
+	<% } else { %>
+	<p>Your cart is empty.</p>
+	<% } %>
+</div>
