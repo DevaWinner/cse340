@@ -742,7 +742,7 @@ add-form textarea {
 	background-color: #f8f9fa;
 	border-radius: var(--border-radius);
 	font-size: 0.9rem;
-	color: var (--gray-dark);
+	color: var(--gray-dark);
 }
 
 /* Add Classification and Add Inventory Forms */
@@ -760,7 +760,7 @@ add-form textarea {
 .add-inventory-form h1 {
 	text-align: center;
 	margin-bottom: 2rem;
-	color: var (--dark-color);
+	color: var(--dark-color);
 }
 
 .add-classification-form .form-group,
@@ -773,7 +773,7 @@ add-form textarea {
 	display: block;
 	margin-bottom: 0.5rem;
 	font-weight: bold;
-	color: var (--dark-color);
+	color: var(--dark-color);
 }
 
 .add-classification-form input,
@@ -1247,5 +1247,5 @@ add-form textarea {
 }
 
 .customer-service {
-  margin: 1.3rem;
+	margin: 1.3rem;
 }
